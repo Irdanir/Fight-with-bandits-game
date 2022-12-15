@@ -31,6 +31,11 @@ public class Game {
                 while (flag == false) {
                     Scanner in = new Scanner(System.in);
                     String string = in.nextLine();
+                    try {
+                        String string = in.nextLine();
+                    } catch (Exception e) {
+                        System.out.println("Вы ввели не число");
+                    }
                     Random rand2 = new Random();
                     int abg = rand2.nextInt(3);
                     if (string.equals("Curse") == true) {
