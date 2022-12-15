@@ -31,30 +31,56 @@ public class Game {
                 while (flag == false) {
                     Scanner in = new Scanner(System.in);
                     String string = in.nextLine();
-                    for (int j = 0; j < player.getAttacks().length; ++j) {  // Ищем атаку игрока
-                        String s = player.getAttacks()[j].name;
-                        boolean qwerty = string.equals(s);
-                        Attack play = player.getAttacks()[j];
-                        if (qwerty) {
-                            enemies[i].health -= play.damage;
-                            damage = play.damage;
-                            flag = true;
-                            break;
+                    Random rand2 = new Random();
+                    int abg = rand2.nextInt(3);
+                    if (string.equals("Curse") == true) {
+                        flag = true;
+                        if (abg != 2) {
+                            enemies[i].health -= 15;
+                            damage = 15;
+                        } else {
+                            player.health -= 15;
+                        }
+                    } else {
+                        for (int j = 0; j < player.getAttacks().length; ++j) {  // Ищем атаку игрока
+                            String s = player.getAttacks()[j].name;
+                            boolean qwerty = string.equals(s);
+                            Attack play = player.getAttacks()[j];
+                            if (qwerty && string != "Curse") {
+                                enemies[i].health -= play.damage;
+                                damage = play.damage;
+                                flag = true;
+                                break;
+                            }
                         }
                     }
                     if (!flag) {
                         System.out.println("Вы ввели неправильное название атаки. Попробуйте еще раз");
                     } else {
-                        System.out.println("Вы нанесли урон: " + damage + ".");
-                        if (string.equals("Ultimate move") == true) {
-                            System.out.println("За применение этого удара с вас было снято 40 хп");
-                            player.health -= 40;
-                        }
-                        if (enemies[i].health <= 0) {
-                            System.out.println("Вы победили этого врага!");
-                            break;
+                        if (string.equals("Curse") == true) {
+                            if (abg != 2) {
+                                System.out.println("Вы нанесли урон: " + 15 + ".");
+                            } else {
+                                System.out.println("Заклинание сорвалось и вы получили " + 15 + " урона.");
+                            }
+                            if (enemies[i].health <= 0) {
+                                System.out.println("Вы победили этого врага!");
+                                break;
+                            } else {
+                                System.out.println("Оставшееся здоровье врага - " + enemies[i].health);
+                            }
                         } else {
-                            System.out.println("Оставшееся здоровье врага - " + enemies[i].health);
+                            System.out.println("Вы нанесли урон: " + damage + ".");
+                            if (string.equals("Ultimate move") == true) {
+                                System.out.println("За применение этого удара с вас было снято 40 хп");
+                                player.health -= 40;
+                            }
+                            if (enemies[i].health <= 0) {
+                                System.out.println("Вы победили этого врага!");
+                                break;
+                            } else {
+                                System.out.println("Оставшееся здоровье врага - " + enemies[i].health);
+                            }
                         }
                     }
                 }
